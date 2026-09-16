@@ -1,11 +1,13 @@
 package practice.auth.controller;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
+import practice.auth.dtos.UpdateUserRequest;
 import practice.auth.dtos.UserResponse;
 import practice.auth.service.UserService;
 
@@ -59,6 +61,13 @@ public class UserController {
             .status(HttpStatus.OK)
             .body(userService.getUserById(id)
         );
+    }
+
+    @PutMapping("/users/{id}")
+    public UserResponse updateUser(
+            @PathVariable String id,
+            @Valid @RequestBody UpdateUserRequest request ) {
+        return userService.updateUser(id, request);
     }
 
     @DeleteMapping("/users/{id}")
